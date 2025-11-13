@@ -11,7 +11,7 @@
   .glass { background: rgba(255,255,255,0.05); backdrop-filter: blur(6px); }
   nav a { transition: color 0.2s; }
   nav a:hover { color: #38bdf8; }
-  #content { max-width: 800px; margin: auto; padding: 2rem; }
+  #content, #tosContent, #licenseContent { max-width: 800px; margin: auto; padding: 2rem; }
   pre { background: #1e293b; padding: 1rem; border-radius: 0.5rem; overflow-x:auto; }
   code { background: #1e293b; padding: 0.2rem 0.4rem; border-radius: 0.3rem; }
 </style>
@@ -27,11 +27,9 @@
     </div>
     <nav class="space-x-4">
       <a href="#home">Home</a>
-      <a href="#readme">README</a>
-      <a href="#tos">TOS</a>
-      <a href="#license">License</a>
-      <a href="https://discord.com/oauth2/authorize?client_id=1015347531816902886&scope=bot&permissions=8" class="bg-sky-500 px-3 py-1 rounded text-slate-900">Invite</a>
-      <a href="https://discord.gg/7am95PkR" class="bg-indigo-500 px-3 py-1 rounded text-slate-900">Join Server</a>
+      <a href="#docs">Docs</a>
+      <a href="https://discord.com/oauth2/authorize?client_id=YOUR_CLIENT_ID&scope=bot&permissions=8" class="bg-sky-500 px-3 py-1 rounded text-slate-900">Invite</a>
+      <a href="https://discord.gg/YOUR_SERVER" class="bg-indigo-500 px-3 py-1 rounded text-slate-900">Join Server</a>
     </nav>
   </div>
 </header>
@@ -41,45 +39,53 @@
 <!-- Home Section -->
 <section id="home" class="text-center py-20">
   <h1 class="text-5xl font-bold mb-4">Xero Discord Bot</h1>
-  <p class="text-slate-300 max-w-xl mx-auto mb-8">Manage your Discord server, automate tasks, and explore our powerful features with Xero Bot.</p>
+  <p class="text-slate-300 max-w-xl mx-auto mb-8">Manage your Discord server, automate tasks, and explore powerful features with Xero Bot.</p>
   <div class="flex justify-center gap-4">
-    <a href="https://discord.com/oauth2/authorize?client_id=1015347531816902886&scope=bot&permissions=8" class="bg-sky-500 px-6 py-3 rounded font-bold text-slate-900 hover:opacity-90">Invite Bot</a>
-    <a href="https://discord.gg/7am95PkR" class="bg-indigo-500 px-6 py-3 rounded font-bold text-slate-900 hover:opacity-90">Join Server</a>
+    <a href="https://discord.com/oauth2/authorize?client_id=YOUR_CLIENT_ID&scope=bot&permissions=8" class="bg-sky-500 px-6 py-3 rounded font-bold text-slate-900 hover:opacity-90">Invite Bot</a>
+    <a href="https://discord.gg/YOUR_SERVER" class="bg-indigo-500 px-6 py-3 rounded font-bold text-slate-900 hover:opacity-90">Join Server</a>
   </div>
 </section>
 
-<!-- README Section -->
-<section id="readme" class="py-20 bg-slate-900/50">
-  <div id="content" class="prose prose-slate max-w-none"></div>
-</section>
-
-<!-- TOS Section -->
-<section id="tos" class="py-20">
-  <div id="tosContent" class="prose prose-slate max-w-none"></div>
-</section>
-
-<!-- License Section -->
-<section id="license" class="py-20 bg-slate-900/50">
-  <div id="licenseContent" class="prose prose-slate max-w-none"></div>
+<!-- Docs Section with Tabs -->
+<section id="docs" class="py-20 bg-slate-900/50">
+  <div class="max-w-4xl mx-auto px-4">
+    <div class="flex justify-center mb-8 space-x-4">
+      <button class="tabBtn px-4 py-2 bg-slate-700 rounded-md" data-tab="readme">README</button>
+      <button class="tabBtn px-4 py-2 bg-slate-700 rounded-md" data-tab="tos">TOS</button>
+      <button class="tabBtn px-4 py-2 bg-slate-700 rounded-md" data-tab="license">License</button>
+    </div>
+    <div id="tabContent" class="glass rounded-lg shadow-soft p-6 min-h-[400px] overflow-auto">
+      <div id="readme" class="md-content"></div>
+      <div id="tos" class="md-content hidden"></div>
+      <div id="license" class="md-content hidden"></div>
+    </div>
+  </div>
 </section>
 
 <script>
-// Function to load Markdown files and render them
+// Load Markdown files
 async function loadMarkdown(id, file) {
   try {
-    const response = await fetch(file);
-    if(!response.ok) throw new Error('File not found');
-    const text = await response.text();
+    const res = await fetch(file);
+    const text = await res.text();
     document.getElementById(id).innerHTML = marked.parse(text);
   } catch(e) {
     document.getElementById(id).innerHTML = '<p class="text-rose-400">Error loading ' + file + '</p>';
   }
 }
+loadMarkdown('readme', 'README.md');
+loadMarkdown('tos', 'TOS.md');
+loadMarkdown('license', 'LICENSE.md');
 
-// Load all MD files
-loadMarkdown('content', 'README.md');
-loadMarkdown('tosContent', 'TOS.md');
-loadMarkdown('licenseContent', 'LICENSE.md');
+// Tab functionality
+const tabs = document.querySelectorAll('.tabBtn');
+const contents = document.querySelectorAll('.md-content');
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    contents.forEach(c => c.classList.add('hidden'));
+    document.getElementById(tab.dataset.tab).classList.remove('hidden');
+  });
+});
 </script>
 
 </body>
