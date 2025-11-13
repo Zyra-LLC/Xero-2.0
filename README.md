@@ -48,3 +48,4 @@ This version brings a complete rewrite focused on speed, API integration, and co
 ```bash
 git clone https://github.com/YourName/Xero-2.0.git
 cd Xero-2.0
+**THIS BOT IS NOT PUBLIC A FRAMEWORK WILL BE SUPPLIED SOON**
