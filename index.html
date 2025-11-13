@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Xero Discord Bot</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<style>
+  body { background-color: #0f172a; color: #e2e8f0; }
+  .glass { background: rgba(255,255,255,0.05); backdrop-filter: blur(6px); }
+  nav a { transition: color 0.2s; }
+  nav a:hover { color: #38bdf8; }
+  #content { max-width: 800px; margin: auto; padding: 2rem; }
+  pre { background: #1e293b; padding: 1rem; border-radius: 0.5rem; overflow-x:auto; }
+  code { background: #1e293b; padding: 0.2rem 0.4rem; border-radius: 0.3rem; }
+</style>
+</head>
+<body class="antialiased">
+
+<!-- Navbar -->
+<header class="fixed top-0 w-full glass shadow-soft z-50">
+  <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
+    <div class="flex items-center gap-2">
+      <div class="w-10 h-10 bg-sky-500 flex items-center justify-center font-bold rounded-lg">X</div>
+      <span class="font-bold text-lg">Xero Bot</span>
+    </div>
+    <nav class="space-x-4">
+      <a href="#home">Home</a>
+      <a href="#readme">README</a>
+      <a href="#tos">TOS</a>
+      <a href="#license">License</a>
+      <a href="https://discord.com/oauth2/authorize?client_id=1015347531816902886&scope=bot&permissions=8" class="bg-sky-500 px-3 py-1 rounded text-slate-900">Invite</a>
+      <a href="https://discord.gg/7am95PkR" class="bg-indigo-500 px-3 py-1 rounded text-slate-900">Join Server</a>
+    </nav>
+  </div>
+</header>
+
+<main class="pt-24">
+
+<!-- Home Section -->
+<section id="home" class="text-center py-20">
+  <h1 class="text-5xl font-bold mb-4">Xero Discord Bot</h1>
+  <p class="text-slate-300 max-w-xl mx-auto mb-8">Manage your Discord server, automate tasks, and explore our powerful features with Xero Bot.</p>
+  <div class="flex justify-center gap-4">
+    <a href="https://discord.com/oauth2/authorize?client_id=1015347531816902886&scope=bot&permissions=8" class="bg-sky-500 px-6 py-3 rounded font-bold text-slate-900 hover:opacity-90">Invite Bot</a>
+    <a href="https://discord.gg/7am95PkR" class="bg-indigo-500 px-6 py-3 rounded font-bold text-slate-900 hover:opacity-90">Join Server</a>
+  </div>
+</section>
+
+<!-- README Section -->
+<section id="readme" class="py-20 bg-slate-900/50">
+  <div id="content" class="prose prose-slate max-w-none"></div>
+</section>
+
+<!-- TOS Section -->
+<section id="tos" class="py-20">
+  <div id="tosContent" class="prose prose-slate max-w-none"></div>
+</section>
+
+<!-- License Section -->
+<section id="license" class="py-20 bg-slate-900/50">
+  <div id="licenseContent" class="prose prose-slate max-w-none"></div>
+</section>
+
+<script>
+// Function to load Markdown files and render them
+async function loadMarkdown(id, file) {
+  try {
+    const response = await fetch(file);
+    if(!response.ok) throw new Error('File not found');
+    const text = await response.text();
+    document.getElementById(id).innerHTML = marked.parse(text);
+  } catch(e) {
+    document.getElementById(id).innerHTML = '<p class="text-rose-400">Error loading ' + file + '</p>';
+  }
+}
+
+// Load all MD files
+loadMarkdown('content', 'README.md');
+loadMarkdown('tosContent', 'TOS.md');
+loadMarkdown('licenseContent', 'LICENSE.md');
+</script>
+
+</body>
+</html>
