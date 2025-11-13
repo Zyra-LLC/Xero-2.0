@@ -1,6 +1,6 @@
 # Terms of Service
 
-**Effective date:** [Effective Date]
+**Effective date:** 2:38 AM EST 11/13/2025
 
 Welcome to **Xero**, an open-source framework. These Terms of Service ("Terms") govern your use of the Xero framework, its source code, documentation, and related tools (collectively, the "Framework"). By accessing, using, or contributing to Xero, you agree to these Terms. If you do not agree, please refrain from using or contributing to the Framework.
 
